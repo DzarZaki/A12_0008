@@ -5,7 +5,10 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.finalpam.ui.kursus.viewmodel.DetailKursusViewModel
 import com.example.finalpam.ui.kursus.viewmodel.HomeKursusViewModel
+import com.example.finalpam.ui.kursus.viewmodel.InsertKursusViewModel
+import com.example.finalpam.ui.kursus.viewmodel.UpdateKursusViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {

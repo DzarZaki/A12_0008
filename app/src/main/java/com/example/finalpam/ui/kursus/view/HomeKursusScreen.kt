@@ -42,6 +42,7 @@ import com.example.finalpam.model.Kursus
 import com.example.finalpam.ui.costumwidget.CustomTopAppBar
 import com.example.finalpam.ui.kursus.viewmodel.HomeKursusUiState
 import com.example.finalpam.ui.kursus.viewmodel.HomeKursusViewModel
+import com.example.finalpam.ui.navigation.DestinasiNavigasi
 
 object DestinasiHome : DestinasiNavigasi {
     override val route = "home_kursus"

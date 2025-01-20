@@ -25,6 +25,7 @@ import com.example.finalpam.ui.costumwidget.CustomTopAppBar
 import com.example.finalpam.ui.kursus.viewmodel.InsertKursusUiEvent
 import com.example.finalpam.ui.kursus.viewmodel.InsertKursusUiState
 import com.example.finalpam.ui.kursus.viewmodel.InsertKursusViewModel
+import com.example.finalpam.ui.navigation.DestinasiNavigasi
 import kotlinx.coroutines.launch
 
 object DestinasiEntry : DestinasiNavigasi {
