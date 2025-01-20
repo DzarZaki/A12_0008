@@ -25,10 +25,13 @@ import com.example.finalpam.ui.costumwidget.CustomTopAppBar
 import com.example.finalpam.ui.kursus.viewmodel.DetailKursusUiState
 import com.example.finalpam.ui.kursus.viewmodel.DetailKursusViewModel
 import com.example.finalpam.ui.kursus.viewmodel.InsertKursusUiEvent
+import com.example.finalpam.ui.navigation.DestinasiNavigasi
 
 object DestinasiDetail : DestinasiNavigasi {
     override val route = "kursus_detail"
     override val titleRes = "Detail Kursus"
+    const val ID_KURSUS = "id_kursus"
+    val routeWithArgs = "$route/{$ID_KURSUS}"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,6 +39,8 @@ object DestinasiDetail : DestinasiNavigasi {
 fun DetailKursusScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit = { },
     viewModel: DetailKursusViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
