@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalpam.model.Kursus
 import com.example.finalpam.repository.KursusRepository
+import com.example.finalpam.ui.kursus.view.DestinasiDetail
 import kotlinx.coroutines.launch
 
 class DetailKursusViewModel (
