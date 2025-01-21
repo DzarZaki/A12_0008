@@ -17,6 +17,14 @@ import com.example.finalpam.ui.kursus.view.DetailKursusScreen
 import com.example.finalpam.ui.kursus.view.EntryKursusScreen
 import com.example.finalpam.ui.kursus.view.HomeKursusScreen
 import com.example.finalpam.ui.kursus.view.UpdateKursusView
+import com.example.finalpam.ui.siswa.view.DestinasiDetailSiswa
+import com.example.finalpam.ui.siswa.view.DestinasiHomeSiswa
+import com.example.finalpam.ui.siswa.view.DestinasiInsertSiswa
+import com.example.finalpam.ui.siswa.view.DestinasiUpdateSiswa
+import com.example.finalpam.ui.siswa.view.DetailSiswaScreen
+import com.example.finalpam.ui.siswa.view.HomeSiswaScreen
+import com.example.finalpam.ui.siswa.view.InsertSiswaScreen
+import com.example.finalpam.ui.siswa.view.UpdateSiswaScreen
 
 @Composable
 fun PengelolaHalaman(navController: NavHostController = rememberNavController()) {
@@ -90,6 +98,71 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
             )
         ) {
             UpdateKursusView(
+                navigateBack = {
+                    navController.popBackStack()
+                },
+                onNavigate = {
+                    navController.popBackStack()
+                },
+            )
+        }
+
+        // Halaman Home Siswa
+        composable(DestinasiHomeSiswa.route) {
+            HomeSiswaScreen(
+                navigateToItemEntry = { navController.navigate(DestinasiInsertSiswa.route) },
+                onDetailClick = { idSiswa ->
+                    navController.navigate("${DestinasiDetailSiswa.route}/$idSiswa")
+                }
+            )
+        }
+
+        // Halaman Tambah Siswa
+        composable(DestinasiInsertSiswa.route) {
+            InsertSiswaScreen(navigateBack = {
+                navController.navigate(DestinasiHomeSiswa.route) {
+                    popUpTo(DestinasiHomeSiswa.route) { inclusive = true }
+                }
+            })
+        }
+
+        // Halaman Detail Siswa
+        composable(
+            DestinasiDetailSiswa.routeWithArgs,
+            arguments = listOf(
+                navArgument(DestinasiDetailSiswa.ID_SISWA) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val idSiswa = it.arguments?.getString(DestinasiDetailSiswa.ID_SISWA)
+            idSiswa?.let {
+                DetailSiswaScreen(
+                    navigateBack = {
+                        navController.navigate(DestinasiHomeSiswa.route) {
+                            popUpTo(DestinasiHomeSiswa.route) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    onEditClick = { navController.navigate("${DestinasiUpdateSiswa.route}/$it") },
+                    onDeleteClick = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+        }
+
+        // Halaman Edit Siswa
+        composable(
+            DestinasiUpdateSiswa.routeWithArgs,
+            arguments = listOf(
+                navArgument(DestinasiUpdateSiswa.ID_SISWA) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            UpdateSiswaScreen(
                 navigateBack = {
                     navController.popBackStack()
                 },
