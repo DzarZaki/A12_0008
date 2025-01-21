@@ -7,7 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalpam.repository.SiswaRepository
-import com.example.finalpam.ui.kursus.view.DestinasiUpdate
+import com.example.finalpam.ui.siswa.view.DestinasiUpdateSiswa
 import kotlinx.coroutines.launch
 
 class UpdateSiswaViewModel (
@@ -18,7 +18,7 @@ class UpdateSiswaViewModel (
     var updateUiState by mutableStateOf(InsertSiswaUiState())
         private set
 
-    private val idSiswa: String = checkNotNull(savedStateHandle[DestinasiUpdate.ID_SISWA])
+    private val idSiswa: String = checkNotNull(savedStateHandle[DestinasiUpdateSiswa.ID_SISWA])
 
     init {
         viewModelScope.launch {

@@ -9,13 +9,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalpam.model.Siswa
 import com.example.finalpam.repository.SiswaRepository
 import com.example.finalpam.ui.kursus.view.DestinasiDetail
+import com.example.finalpam.ui.siswa.view.DestinasiDetailSiswa
 import kotlinx.coroutines.launch
 
 class DetailSiswaViewModel (
     savedStateHandle: SavedStateHandle,
     private val siswaRepository: SiswaRepository
 ) : ViewModel() {
-    private val idSiswa: String = checkNotNull(savedStateHandle[DestinasiDetail.ID_SISWA])
+    private val idSiswa: String = checkNotNull(savedStateHandle[DestinasiDetailSiswa.ID_SISWA])
 
     var detailUiState: DetailSiswaUiState by mutableStateOf(DetailSiswaUiState())
         private set
