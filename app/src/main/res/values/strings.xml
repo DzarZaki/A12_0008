@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FinalPAM</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="loading_failed">Failed to load</string>
+    <string name="retry">Retry</string>
+    <string name="loading">Loading</string>
 </resources>
