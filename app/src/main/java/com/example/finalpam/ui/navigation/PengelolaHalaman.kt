@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.finalpam.ui.MainHome.MainHomeScreen
 import com.example.finalpam.ui.kursus.view.DestinasiDetail
 import com.example.finalpam.ui.kursus.view.DestinasiEntry
 import com.example.finalpam.ui.kursus.view.DestinasiHome
@@ -21,10 +22,19 @@ import com.example.finalpam.ui.kursus.view.UpdateKursusView
 fun PengelolaHalaman(navController: NavHostController = rememberNavController()) {
     NavHost(
         navController = navController,
-        startDestination = DestinasiHome.route,
-        modifier = Modifier,
+        startDestination = "main_home", // Halaman utama
     ) {
-        // Halaman Home
+        // Halaman Utama (Main Home)
+        composable("main_home") {
+            MainHomeScreen(
+                onKursusClick = { navController.navigate(DestinasiHome.route) },
+                onSiswaClick = { /* Navigasi ke HomeSiswa */ },
+                onInstrukturClick = { /* Navigasi ke HomeInstruktur */ },
+                onPendaftaranClick = { /* Navigasi ke HomePendaftaran */ },
+            )
+        }
+
+        // Halaman Home Kursus
         composable(DestinasiHome.route) {
             HomeKursusScreen(
                 navigateToItemEntry = { navController.navigate(DestinasiEntry.route) },
@@ -90,4 +100,5 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         }
     }
 }
+
 
