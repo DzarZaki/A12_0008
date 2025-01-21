@@ -36,7 +36,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         composable("main_home") {
             MainHomeScreen(
                 onKursusClick = { navController.navigate(DestinasiHome.route) },
-                onSiswaClick = { /* Navigasi ke HomeSiswa */ },
+                onSiswaClick = { navController.navigate(DestinasiHomeSiswa.route) },
                 onInstrukturClick = { /* Navigasi ke HomeInstruktur */ },
                 onPendaftaranClick = { /* Navigasi ke HomePendaftaran */ },
             )
