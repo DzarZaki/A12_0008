@@ -5,6 +5,10 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.finalpam.ui.instruktur.viewmodel.DetailInstrukturViewModel
+import com.example.finalpam.ui.instruktur.viewmodel.HomeInstrukturViewModel
+import com.example.finalpam.ui.instruktur.viewmodel.InsertInstrukturViewModel
+import com.example.finalpam.ui.instruktur.viewmodel.UpdateInstrukturViewModel
 import com.example.finalpam.ui.kursus.viewmodel.DetailKursusViewModel
 import com.example.finalpam.ui.kursus.viewmodel.HomeKursusViewModel
 import com.example.finalpam.ui.kursus.viewmodel.InsertKursusViewModel
@@ -50,6 +54,24 @@ object PenyediaViewModel {
             UpdateSiswaViewModel(
                 createSavedStateHandle(),
                 aplikasiFinal().container.siswaRepository
+            )
+        }
+        // Inisialisasi ViewModel untuk HomeInstruktur
+        initializer { HomeInstrukturViewModel(aplikasiFinal().container.instrukturRepository) }
+        // Inisialisasi ViewModel untuk InsertInstruktur
+        initializer { InsertInstrukturViewModel(aplikasiFinal().container.instrukturRepository) }
+        // Inisialisasi ViewModel untuk DetailInstruktur
+        initializer {
+            DetailInstrukturViewModel(
+                createSavedStateHandle(),
+                aplikasiFinal().container.instrukturRepository
+            )
+        }
+        // Inisialisasi ViewModel untuk UpdateInstruktur
+        initializer {
+            UpdateInstrukturViewModel(
+                createSavedStateHandle(),
+                aplikasiFinal().container.instrukturRepository
             )
         }
     }
