@@ -9,6 +9,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.finalpam.ui.MainHome.MainHomeScreen
+import com.example.finalpam.ui.instruktur.view.DestinasiDetailInstruktur
+import com.example.finalpam.ui.instruktur.view.DestinasiHomeInstruktur
+import com.example.finalpam.ui.instruktur.view.DestinasiInstrukturEntry
+import com.example.finalpam.ui.instruktur.view.DestinasiUpdateInstruktur
+import com.example.finalpam.ui.instruktur.view.DetailInstrukturScreen
+import com.example.finalpam.ui.instruktur.view.HomeInstrukturScreen
+import com.example.finalpam.ui.instruktur.view.InsertInstrukturScreen
+import com.example.finalpam.ui.instruktur.view.UpdateInstrukturScreen
 import com.example.finalpam.ui.kursus.view.DestinasiDetail
 import com.example.finalpam.ui.kursus.view.DestinasiEntry
 import com.example.finalpam.ui.kursus.view.DestinasiHome
@@ -37,7 +45,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
             MainHomeScreen(
                 onKursusClick = { navController.navigate(DestinasiHome.route) },
                 onSiswaClick = { navController.navigate(DestinasiHomeSiswa.route) },
-                onInstrukturClick = { /* Navigasi ke HomeInstruktur */ },
+                onInstrukturClick = { navController.navigate(DestinasiHomeInstruktur.route) },
                 onPendaftaranClick = { /* Navigasi ke HomePendaftaran */ },
             )
         }
@@ -171,7 +179,69 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                 },
             )
         }
+
+        // Halaman Home Instruktur
+        composable(DestinasiHomeInstruktur.route) {
+            HomeInstrukturScreen(
+                navigateToItemEntry = { navController.navigate(DestinasiInstrukturEntry.route) },
+                onDetailClick = { idInstruktur ->
+                    navController.navigate("${DestinasiDetailInstruktur.route}/$idInstruktur")
+                }
+            )
+        }
+
+        // Halaman Tambah Instruktur
+        composable(DestinasiInstrukturEntry.route) {
+            InsertInstrukturScreen(navigateBack = {
+                navController.navigate(DestinasiHomeInstruktur.route) {
+                    popUpTo(DestinasiHomeInstruktur.route) { inclusive = true }
+                }
+            })
+        }
+
+        // Halaman Detail Instruktur
+        composable(
+            DestinasiDetailInstruktur.routeWithArgs,
+            arguments = listOf(
+                navArgument(DestinasiDetailInstruktur.ID_INSTRUKTUR) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val idInstruktur = it.arguments?.getString(DestinasiDetailInstruktur.ID_INSTRUKTUR)
+            idInstruktur?.let {
+                DetailInstrukturScreen(
+                    navigateBack = {
+                        navController.navigate(DestinasiHomeInstruktur.route) {
+                            popUpTo(DestinasiHomeInstruktur.route) { inclusive = true }
+                        }
+                    },
+                    onEditClick = { navController.navigate("${DestinasiUpdateInstruktur.route}/$it") },
+                    onDeleteClick = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+        }
+
+        // Halaman Edit Instruktur
+        composable(
+            DestinasiUpdateInstruktur.routeWithArgs,
+            arguments = listOf(
+                navArgument(DestinasiUpdateInstruktur.ID_INSTRUKTUR) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            UpdateInstrukturScreen(
+                navigateBack = {
+                    navController.popBackStack()
+                },
+                onNavigate = {
+                    navController.popBackStack()
+                },
+            )
+        }
     }
 }
-
 
