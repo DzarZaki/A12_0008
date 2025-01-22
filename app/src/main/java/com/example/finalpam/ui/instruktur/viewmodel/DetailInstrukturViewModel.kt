@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalpam.model.Instruktur
 import com.example.finalpam.repository.InstrukturRepository
+import com.example.finalpam.ui.instruktur.view.DestinasiDetailInstruktur
 import com.example.finalpam.ui.kursus.view.DestinasiDetail
 import kotlinx.coroutines.launch
 
@@ -16,7 +17,7 @@ class DetailInstrukturViewModel(
     private val instrukturRepository: InstrukturRepository
 ) : ViewModel() {
 
-    private val idInstruktur: String = checkNotNull(savedStateHandle[DestinasiDetail.ID_INSTRUKTUR])
+    private val idInstruktur: String = checkNotNull(savedStateHandle[DestinasiDetailInstruktur.ID_INSTRUKTUR])
 
     var detailUiState by mutableStateOf(DetailInstrukturUiState())
         private set

@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalpam.repository.InstrukturRepository
+import com.example.finalpam.ui.instruktur.view.DestinasiUpdateInstruktur
 import kotlinx.coroutines.launch
 
 class UpdateInstrukturViewModel(
@@ -17,25 +18,25 @@ class UpdateInstrukturViewModel(
     var updateUIState by mutableStateOf(InsertInstrukturUiState())
         private set
 
-    private val idInstruktur: String = checkNotNull(savedStateHandle[DestinasiUpdate.ID_INSTRUKTUR])
+    private val _idInstruktur: String = checkNotNull(savedStateHandle[DestinasiUpdateInstruktur.ID_INSTRUKTUR])
 
     init {
         viewModelScope.launch {
-            updateUIState = instrukturRepository.getInstrukturById(idInstruktur).data
+            updateUIState = instrukturRepository.getInstrukturById(_idInstruktur).data
                 .toUiStateInstruktur()
         }
     }
 
     fun updateInsertInstrukturState(insertInstrukturUiEvent: InsertInstrukturUiEvent) {
-        updateUIState = InsertInstrukturUiState(insertInstrukturUiEvent = insertInstrukturUiEvent)
+        updateUIState = InsertInstrukturUiState(insertUiEvent = insertInstrukturUiEvent)
     }
 
-    suspend fun updateInstruktur() {
+    fun updateData() {
         viewModelScope.launch {
             try {
                 instrukturRepository.updateInstruktur(
-                    idInstruktur,
-                    updateUIState.insertInstrukturUiEvent.toInstruktur()
+                    _idInstruktur,
+                    updateUIState.insertUiEvent.toInstruktur()
                 )
             } catch (e: Exception) {
                 e.printStackTrace()

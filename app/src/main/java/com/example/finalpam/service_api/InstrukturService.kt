@@ -3,6 +3,7 @@ package com.example.finalpam.service_api
 import com.example.finalpam.model.AllInstrukturResponse
 import com.example.finalpam.model.Instruktur
 import com.example.finalpam.model.InstrukturDetailResponse
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -18,7 +19,7 @@ interface InstrukturService {
     )
 
     @POST("instruktur")
-    suspend fun insertInstruktur(@Body instruktur: Instruktur) : retrofit2.Response<Void>
+    suspend fun insertInstruktur(@Body instruktur: Instruktur) : Response<Void>
 
 
     @GET("instruktur")
@@ -35,6 +36,6 @@ interface InstrukturService {
 
 
     @DELETE("instruktur/{id_instruktur}")
-    suspend fun deleteInstruktur(@Path("id_instruktur") idInstruktur: String) : retrofit2.Response<Void>
+    suspend fun deleteInstruktur(@Path("id_instruktur") idInstruktur: String) : Response<Void>
 
 }

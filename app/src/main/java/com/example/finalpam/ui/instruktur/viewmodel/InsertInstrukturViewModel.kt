@@ -13,14 +13,14 @@ class InsertInstrukturViewModel(private val instrukturRepository: InstrukturRepo
     var uiState by mutableStateOf(InsertInstrukturUiState())
         private set
 
-    fun updateInsertInstrukturState(insertInstrukturUiEvent: InsertInstrukturUiEvent) {
-        uiState = InsertInstrukturUiState(insertInstrukturUiEvent = insertInstrukturUiEvent)
+    fun updateInsertInstrukturState(insertUiEvent: InsertInstrukturUiEvent) {
+        uiState = InsertInstrukturUiState(insertUiEvent = insertUiEvent)
     }
 
-    suspend fun insertInstruktur() {
+    fun insertInstruktur() {
         viewModelScope.launch {
             try {
-                instrukturRepository.insertInstruktur(uiState.insertInstrukturUiEvent.toInstruktur())
+                instrukturRepository.insertInstruktur(uiState.insertUiEvent.toInstruktur())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -29,7 +29,7 @@ class InsertInstrukturViewModel(private val instrukturRepository: InstrukturRepo
 }
 
 data class InsertInstrukturUiState(
-    val insertInstrukturUiEvent: InsertInstrukturUiEvent = InsertInstrukturUiEvent()
+    val insertUiEvent: InsertInstrukturUiEvent = InsertInstrukturUiEvent()
 )
 
 data class InsertInstrukturUiEvent(
@@ -40,6 +40,7 @@ data class InsertInstrukturUiEvent(
     val deskripsi: String = ""
 )
 
+// Konversi InsertInstrukturUiEvent ke Instruktur
 fun InsertInstrukturUiEvent.toInstruktur(): Instruktur = Instruktur(
     idInstruktur = idInstruktur,
     nama = nama,
@@ -48,10 +49,12 @@ fun InsertInstrukturUiEvent.toInstruktur(): Instruktur = Instruktur(
     deskripsi = deskripsi
 )
 
+// Konversi Instruktur ke InsertInstrukturUiState
 fun Instruktur.toUiStateInstruktur(): InsertInstrukturUiState = InsertInstrukturUiState(
-    insertInstrukturUiEvent = toInsertInstrukturUiEvent()
+    insertUiEvent = toInsertInstrukturUiEvent()
 )
 
+// Konversi Instruktur ke InsertInstrukturUiEvent
 fun Instruktur.toInsertInstrukturUiEvent(): InsertInstrukturUiEvent = InsertInstrukturUiEvent(
     idInstruktur = idInstruktur,
     nama = nama,
