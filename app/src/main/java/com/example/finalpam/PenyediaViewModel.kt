@@ -13,6 +13,10 @@ import com.example.finalpam.ui.kursus.viewmodel.DetailKursusViewModel
 import com.example.finalpam.ui.kursus.viewmodel.HomeKursusViewModel
 import com.example.finalpam.ui.kursus.viewmodel.InsertKursusViewModel
 import com.example.finalpam.ui.kursus.viewmodel.UpdateKursusViewModel
+import com.example.finalpam.ui.pendaftaran.viewmodel.DetailPendaftaranViewModel
+import com.example.finalpam.ui.pendaftaran.viewmodel.HomePendaftaranViewModel
+import com.example.finalpam.ui.pendaftaran.viewmodel.InsertPendaftaranViewModel
+import com.example.finalpam.ui.pendaftaran.viewmodel.UpdatePendaftaranViewModel
 import com.example.finalpam.ui.siswa.viewmodel.DetailSiswaViewModel
 import com.example.finalpam.ui.siswa.viewmodel.HomeSiswaViewModel
 import com.example.finalpam.ui.siswa.viewmodel.InsertSiswaViewModel
@@ -72,6 +76,24 @@ object PenyediaViewModel {
             UpdateInstrukturViewModel(
                 createSavedStateHandle(),
                 aplikasiFinal().container.instrukturRepository
+            )
+        }
+        // Inisialisasi ViewModel untuk HomePendaftaran
+        initializer { HomePendaftaranViewModel(aplikasiFinal().container.pendaftaranRepository) }
+        // Inisialisasi ViewModel untuk InsertPendaftaran
+        initializer { InsertPendaftaranViewModel(aplikasiFinal().container.pendaftaranRepository) }
+        // Inisialisasi ViewModel untuk DetailPendaftaran
+        initializer {
+            DetailPendaftaranViewModel(
+                createSavedStateHandle(),
+                aplikasiFinal().container.pendaftaranRepository
+            )
+        }
+        // Inisialisasi ViewModel untuk UpdatePendaftaran
+        initializer {
+            UpdatePendaftaranViewModel(
+                createSavedStateHandle(),
+                aplikasiFinal().container.pendaftaranRepository
             )
         }
     }
