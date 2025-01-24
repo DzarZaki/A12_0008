@@ -25,6 +25,14 @@ import com.example.finalpam.ui.kursus.view.DetailKursusScreen
 import com.example.finalpam.ui.kursus.view.EntryKursusScreen
 import com.example.finalpam.ui.kursus.view.HomeKursusScreen
 import com.example.finalpam.ui.kursus.view.UpdateKursusView
+import com.example.finalpam.ui.pendaftaran.view.DestinasiDetailPendaftaran
+import com.example.finalpam.ui.pendaftaran.view.DestinasiHomePendaftaran
+import com.example.finalpam.ui.pendaftaran.view.DestinasiPendaftaranEntry
+import com.example.finalpam.ui.pendaftaran.view.DestinasiUpdatePendaftaran
+import com.example.finalpam.ui.pendaftaran.view.DetailPendaftaranScreen
+import com.example.finalpam.ui.pendaftaran.view.HomePendaftaranScreen
+import com.example.finalpam.ui.pendaftaran.view.InsertPendaftaranScreen
+import com.example.finalpam.ui.pendaftaran.view.UpdatePendaftaranScreen
 import com.example.finalpam.ui.siswa.view.DestinasiDetailSiswa
 import com.example.finalpam.ui.siswa.view.DestinasiHomeSiswa
 import com.example.finalpam.ui.siswa.view.DestinasiInsertSiswa
@@ -46,7 +54,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                 onKursusClick = { navController.navigate(DestinasiHome.route) },
                 onSiswaClick = { navController.navigate(DestinasiHomeSiswa.route) },
                 onInstrukturClick = { navController.navigate(DestinasiHomeInstruktur.route) },
-                onPendaftaranClick = { /* Navigasi ke HomePendaftaran */ },
+                onPendaftaranClick = { navController.navigate(DestinasiHomePendaftaran.route) },
             )
         }
 
@@ -242,6 +250,69 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                 },
             )
         }
+        // Halaman Home Pendaftaran
+        composable(DestinasiHomePendaftaran.route) {
+            HomePendaftaranScreen(
+                navigateToItemEntry = { navController.navigate(DestinasiPendaftaranEntry.route) },
+                onDetailClick = { idPendaftaran ->
+                    navController.navigate("${DestinasiDetailPendaftaran.route}/$idPendaftaran")
+                }
+            )
+        }
+
+        // Halaman Tambah Pendaftaran
+        composable(DestinasiPendaftaranEntry.route) {
+            InsertPendaftaranScreen(navigateBack = {
+                navController.navigate(DestinasiHomePendaftaran.route) {
+                    popUpTo(DestinasiHomePendaftaran.route) { inclusive = true }
+                }
+            })
+        }
+
+        // Halaman Detail Pendaftaran
+        composable(
+            DestinasiDetailPendaftaran.routeWithArgs,
+            arguments = listOf(
+                navArgument(DestinasiDetailPendaftaran.ID_PENDAFTARAN) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val idPendaftaran = it.arguments?.getString(DestinasiDetailPendaftaran.ID_PENDAFTARAN)
+            idPendaftaran?.let {
+                DetailPendaftaranScreen(
+                    navigateBack = {
+                        navController.navigate(DestinasiHomePendaftaran.route) {
+                            popUpTo(DestinasiHomePendaftaran.route) { inclusive = true }
+                        }
+                    },
+                    onEditClick = { navController.navigate("${DestinasiUpdatePendaftaran.route}/$it") },
+                    onDeleteClick = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+        }
+
+        // Halaman Edit Pendaftaran
+        composable(
+            DestinasiUpdatePendaftaran.routeWithArgs,
+            arguments = listOf(
+                navArgument(DestinasiUpdatePendaftaran.ID_PENDAFTARAN) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            UpdatePendaftaranScreen(
+                navigateBack = {
+                    navController.popBackStack()
+                },
+                onNavigate = {
+                    navController.popBackStack()
+                },
+            )
+        }
+
     }
 }
 
