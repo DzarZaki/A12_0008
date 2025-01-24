@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalpam.model.Pendaftaran
 import com.example.finalpam.repository.PendaftaranRepository
 import com.example.finalpam.ui.kursus.view.DestinasiDetail
+import com.example.finalpam.ui.pendaftaran.view.DestinasiDetailPendaftaran
 import kotlinx.coroutines.launch
 
 class DetailPendaftaranViewModel(
