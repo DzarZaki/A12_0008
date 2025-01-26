@@ -17,16 +17,16 @@ interface KursusService {
         "Content-Type: application/json",
     )
     @POST("kursus/tambahkursus.php")
-    suspend fun insertKursus(@Body kursus: Kursus)
+    suspend fun insertKursus(@Body kursus: Kursus): Response<Void>
 
     @GET("kursus/bacakursus.php")
     suspend fun getAllKursus(): List<Kursus>
 
-    @GET("kursus/bacakursus1.php")
+    @GET("kursus/baca1kursus.php")
     suspend fun getKursusById(@Query("id_kursus") idKursus: String): Kursus
 
     @PUT("kursus/editkursus.php")
-    suspend fun updateKursus(@Query("id_kursus") idKursus: String, @Body kursus: Kursus)
+    suspend fun updateKursus(@Query("id_kursus") idKursus: String, @Body kursus: Kursus) : Response<Void>
 
     @DELETE("kursus/hapuskursus.php")
     suspend fun deleteKursus(@Query("id_kursus") idKursus: String): Response<Void>

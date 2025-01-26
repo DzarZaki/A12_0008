@@ -1,8 +1,6 @@
 package com.example.finalpam.repository
 
-import com.example.finalpam.model.AllSiswaResponse
 import com.example.finalpam.model.Siswa
-import com.example.finalpam.model.SiswaDetailResponse
 import com.example.finalpam.service_api.SiswaService
 import java.io.IOException
 

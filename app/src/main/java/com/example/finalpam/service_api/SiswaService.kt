@@ -1,8 +1,6 @@
 package com.example.finalpam.service_api
 
-import com.example.finalpam.model.AllSiswaResponse
 import com.example.finalpam.model.Siswa
-import com.example.finalpam.model.SiswaDetailResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -10,7 +8,6 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface SiswaService {
@@ -25,7 +22,7 @@ interface SiswaService {
     @GET("siswa/bacasiswa.php")
     suspend fun getAllSiswa(): List<Siswa>
 
-    @GET("siswa/bacasiswa1.php")
+    @GET("siswa/baca1siswa.php")
     suspend fun getSiswaById(@Query("id_siswa") idSiswa: String): Siswa
 
     @PUT("siswa/editsiswa.php")

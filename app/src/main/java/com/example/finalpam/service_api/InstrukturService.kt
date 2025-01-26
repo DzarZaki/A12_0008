@@ -20,7 +20,7 @@ interface InstrukturService {
     @GET("instruktur/bacainstruktur.php")
     suspend fun getAllInstruktur(): List<Instruktur>
 
-    @GET("instruktur/bacainstruktur1.php")
+    @GET("instruktur/baca1instruktur.php")
     suspend fun getInstrukturById(@Query("id_instruktur") idInstruktur: String): Instruktur
 
     @PUT("instruktur/editinstruktur.php")

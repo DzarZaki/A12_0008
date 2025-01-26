@@ -22,7 +22,7 @@ interface PendaftaranService {
     @GET("pendaftaran/bacapendaftaran.php")
     suspend fun getAllPendaftaran(): List<Pendaftaran>
 
-    @GET("pendaftaran/bacapendaftaran1.php")
+    @GET("pendaftaran/baca1pendaftaran.php")
     suspend fun getPendaftaranById(@Query("id_pendaftaran") idPendaftaran: String): Pendaftaran
 
     @PUT("pendaftaran/editpendaftaran.php")

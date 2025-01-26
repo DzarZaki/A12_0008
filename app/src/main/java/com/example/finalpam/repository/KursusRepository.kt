@@ -1,8 +1,6 @@
 package com.example.finalpam.repository
 
-import com.example.finalpam.model.AllKursusResponse
 import com.example.finalpam.model.Kursus
-import com.example.finalpam.model.KursusDetailResponse
 import com.example.finalpam.service_api.KursusService
 import java.io.IOException
 
