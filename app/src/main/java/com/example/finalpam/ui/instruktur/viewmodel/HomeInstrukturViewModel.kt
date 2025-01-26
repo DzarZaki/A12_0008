@@ -29,8 +29,7 @@ class HomeInstrukturViewModel(private val instrukturRepository: InstrukturReposi
         viewModelScope.launch {
             instrukturUiState = HomeInstrukturUiState.Loading
             instrukturUiState = try {
-                val result = instrukturRepository.getAllInstruktur().data
-                HomeInstrukturUiState.Success(result)
+               HomeInstrukturUiState.Success(instrukturRepository.getInstruktur())
             } catch (e: IOException) {
                 HomeInstrukturUiState.Error
             } catch (e: HttpException) {

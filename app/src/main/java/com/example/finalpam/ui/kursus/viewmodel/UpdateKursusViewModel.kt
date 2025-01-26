@@ -22,7 +22,7 @@ class UpdateKursusViewModel (
 
     init {
         viewModelScope.launch {
-            updateUIState = kursusRepository.getKursusById(_idKursus).data
+            updateUIState = kursusRepository.getKursusById(_idKursus)
                 .toUiStateKursus()
         }
     }

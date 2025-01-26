@@ -29,7 +29,7 @@ class DetailSiswaViewModel (
         viewModelScope.launch {
             detailUiState = DetailSiswaUiState(isLoading = true)
             try {
-                val result = siswaRepository.getSiswaById(idSiswa).data
+                val result = siswaRepository.getSiswaById(idSiswa)
                 detailUiState = DetailSiswaUiState(
                     detailUiEvent = result.toDetailSiswaUiEvent(),
                     isLoading = false

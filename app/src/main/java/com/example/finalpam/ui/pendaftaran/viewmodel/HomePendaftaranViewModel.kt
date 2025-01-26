@@ -29,8 +29,7 @@ class HomePendaftaranViewModel(private val pendaftaranRepository: PendaftaranRep
         viewModelScope.launch {
             pendaftaranUiState = HomePendaftaranUiState.Loading
             pendaftaranUiState = try {
-                val response = pendaftaranRepository.getAllPendaftaran()
-                HomePendaftaranUiState.Success(response.data)
+                HomePendaftaranUiState.Success(pendaftaranRepository.getPendaftaran())
             } catch (e: IOException) {
                 HomePendaftaranUiState.Error
             } catch (e: HttpException) {

@@ -22,7 +22,7 @@ class UpdateInstrukturViewModel(
 
     init {
         viewModelScope.launch {
-            updateUIState = instrukturRepository.getInstrukturById(_idInstruktur).data
+            updateUIState = instrukturRepository.getInstrukturById(_idInstruktur)
                 .toUiStateInstruktur()
         }
     }

@@ -28,7 +28,7 @@ class HomeSiswaViewModel (private val siswaRepository: SiswaRepository) : ViewMo
         viewModelScope.launch {
             siswaUiState = HomeSiswaUiState.Loading
             siswaUiState = try {
-                HomeSiswaUiState.Success(siswaRepository.getAllSiswa().data)
+                HomeSiswaUiState.Success(siswaRepository.getSiswa())
             } catch (e: IOException) {
                 HomeSiswaUiState.Error
             } catch (e: HttpException) {

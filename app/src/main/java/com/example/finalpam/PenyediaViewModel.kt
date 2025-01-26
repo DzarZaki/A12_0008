@@ -24,76 +24,64 @@ import com.example.finalpam.ui.siswa.viewmodel.UpdateSiswaViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {
-        // Inisialisasi ViewModel untuk HomeKursus
-        initializer { HomeKursusViewModel(aplikasiFinal().container.kursusRepository) }
-        // Inisialisasi ViewModel untuk InsertKursus
-        initializer { InsertKursusViewModel(aplikasiFinal().container.kursusRepository) }
-        // Inisialisasi ViewModel untuk DetailKursus
+        // ViewModel untuk Kursus
+        initializer { HomeKursusViewModel(aplikasiFinal().kursusContainer.kursusRepository) }
+        initializer { InsertKursusViewModel(aplikasiFinal().kursusContainer.kursusRepository) }
         initializer {
             DetailKursusViewModel(
                 createSavedStateHandle(),
-                aplikasiFinal().container.kursusRepository
+                aplikasiFinal().kursusContainer.kursusRepository
             )
         }
-        // Inisialisasi ViewModel untuk UpdateKursus
         initializer {
             UpdateKursusViewModel(
                 createSavedStateHandle(),
-                aplikasiFinal().container.kursusRepository
+                aplikasiFinal().kursusContainer.kursusRepository
             )
         }
-        // Inisialisasi ViewModel untuk HomeSiswa
-        initializer { HomeSiswaViewModel(aplikasiFinal().container.siswaRepository) }
-        // Inisialisasi ViewModel untuk InsertSiswa
-        initializer { InsertSiswaViewModel(aplikasiFinal().container.siswaRepository) }
-        // Inisialisasi ViewModel untuk DetailSiswa
+        // ViewModel untuk Siswa
+        initializer { HomeSiswaViewModel(aplikasiFinal().siswaContainer.siswaRepository) }
+        initializer { InsertSiswaViewModel(aplikasiFinal().siswaContainer.siswaRepository) }
         initializer {
             DetailSiswaViewModel(
                 createSavedStateHandle(),
-                aplikasiFinal().container.siswaRepository
+                aplikasiFinal().siswaContainer.siswaRepository
             )
         }
-        // Inisialisasi ViewModel untuk UpdateSiswa
         initializer {
             UpdateSiswaViewModel(
                 createSavedStateHandle(),
-                aplikasiFinal().container.siswaRepository
+                aplikasiFinal().siswaContainer.siswaRepository
             )
         }
-        // Inisialisasi ViewModel untuk HomeInstruktur
-        initializer { HomeInstrukturViewModel(aplikasiFinal().container.instrukturRepository) }
-        // Inisialisasi ViewModel untuk InsertInstruktur
-        initializer { InsertInstrukturViewModel(aplikasiFinal().container.instrukturRepository) }
-        // Inisialisasi ViewModel untuk DetailInstruktur
+        // ViewModel untuk Instruktur
+        initializer { HomeInstrukturViewModel(aplikasiFinal().instrukturContainer.instrukturRepository) }
+        initializer { InsertInstrukturViewModel(aplikasiFinal().instrukturContainer.instrukturRepository) }
         initializer {
             DetailInstrukturViewModel(
                 createSavedStateHandle(),
-                aplikasiFinal().container.instrukturRepository
+                aplikasiFinal().instrukturContainer.instrukturRepository
             )
         }
-        // Inisialisasi ViewModel untuk UpdateInstruktur
         initializer {
             UpdateInstrukturViewModel(
                 createSavedStateHandle(),
-                aplikasiFinal().container.instrukturRepository
+                aplikasiFinal().instrukturContainer.instrukturRepository
             )
         }
-        // Inisialisasi ViewModel untuk HomePendaftaran
-        initializer { HomePendaftaranViewModel(aplikasiFinal().container.pendaftaranRepository) }
-        // Inisialisasi ViewModel untuk InsertPendaftaran
-        initializer { InsertPendaftaranViewModel(aplikasiFinal().container.pendaftaranRepository) }
-        // Inisialisasi ViewModel untuk DetailPendaftaran
+        // ViewModel untuk Pendaftaran
+        initializer { HomePendaftaranViewModel(aplikasiFinal().pendaftaranContainer.pendaftaranRepository) }
+        initializer { InsertPendaftaranViewModel(aplikasiFinal().pendaftaranContainer.pendaftaranRepository) }
         initializer {
             DetailPendaftaranViewModel(
                 createSavedStateHandle(),
-                aplikasiFinal().container.pendaftaranRepository
+                aplikasiFinal().pendaftaranContainer.pendaftaranRepository
             )
         }
-        // Inisialisasi ViewModel untuk UpdatePendaftaran
         initializer {
             UpdatePendaftaranViewModel(
                 createSavedStateHandle(),
-                aplikasiFinal().container.pendaftaranRepository
+                aplikasiFinal().pendaftaranContainer.pendaftaranRepository
             )
         }
     }

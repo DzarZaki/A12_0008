@@ -28,7 +28,7 @@ class HomeKursusViewModel (private val kursusRepository: KursusRepository) : Vie
         viewModelScope.launch {
             kursusUiState = HomeKursusUiState.Loading
             kursusUiState = try {
-                HomeKursusUiState.Success(kursusRepository.getAllKursus().data)
+                HomeKursusUiState.Success(kursusRepository.getKursus())
             } catch (e: IOException) {
                 HomeKursusUiState.Error
             } catch (e: HttpException) {

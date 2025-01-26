@@ -22,7 +22,7 @@ class UpdateSiswaViewModel (
 
     init {
         viewModelScope.launch {
-            updateUiState = siswaRepository.getSiswaById(idSiswa).data
+            updateUiState = siswaRepository.getSiswaById(idSiswa)
                 .toUiStateSiswa()
         }
     }

@@ -30,7 +30,7 @@ class DetailInstrukturViewModel(
         viewModelScope.launch {
             detailUiState = DetailInstrukturUiState(isLoading = true)
             try {
-                val result = instrukturRepository.getInstrukturById(idInstruktur).data
+                val result = instrukturRepository.getInstrukturById(idInstruktur)
                 detailUiState = DetailInstrukturUiState(
                     detailUiEvent = result.toDetailUiEvent(),
                     isLoading = false

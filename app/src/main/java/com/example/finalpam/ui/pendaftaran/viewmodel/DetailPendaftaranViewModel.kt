@@ -30,7 +30,7 @@ class DetailPendaftaranViewModel(
         viewModelScope.launch {
             detailUiState = DetailPendaftaranUiState(isLoading = true)
             try {
-                val result = pendaftaranRepository.getPendaftaranById(idPendaftaran).data
+                val result = pendaftaranRepository.getPendaftaranById(idPendaftaran)
                 detailUiState = DetailPendaftaranUiState(
                     detailUiEvent = result.toDetailUiEvent(),
                     isLoading = false

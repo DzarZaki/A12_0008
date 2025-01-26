@@ -22,7 +22,7 @@ class UpdatePendaftaranViewModel(
 
     init {
         viewModelScope.launch {
-            updateUIState = pendaftaranRepository.getPendaftaranById(_idPendaftaran).data
+            updateUIState = pendaftaranRepository.getPendaftaranById(_idPendaftaran)
                 .toUiStatePendaftaran()
         }
     }

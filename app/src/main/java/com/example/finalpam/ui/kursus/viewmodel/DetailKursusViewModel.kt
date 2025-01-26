@@ -28,7 +28,7 @@ class DetailKursusViewModel (
         viewModelScope.launch {
             detailUiState = DetailKursusUiState(isLoading = true)
             try {
-                val result = kursusRepository.getKursusById(idKursus).data
+                val result = kursusRepository.getKursusById(idKursus)
                 detailUiState = DetailKursusUiState(
                     detailUiEvent = result.toDetailUiEvent(),
                     isLoading = false
