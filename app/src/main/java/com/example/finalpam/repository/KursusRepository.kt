@@ -7,36 +7,47 @@ import com.example.finalpam.service_api.KursusService
 import java.io.IOException
 
 interface KursusRepository {
+
     suspend fun insertKursus(kursus: Kursus)
-    suspend fun getAllKursus(): AllKursusResponse
+
+    suspend fun getKursus(): List<Kursus>
+
     suspend fun updateKursus(idKursus: String, kursus: Kursus)
+
     suspend fun deleteKursus(idKursus: String)
-    suspend fun getKursusById(idKursus: String): KursusDetailResponse
+
+    suspend fun getKursusById(idKursus: String): Kursus
 }
 
 class NetworkKursusRepository(
-    private val kursusService: KursusService
+    private val kursusApiService: KursusService
 ) : KursusRepository {
     override suspend fun insertKursus(kursus: Kursus) {
-        kursusService.insertKursus(kursus)
-    }
-
-    override suspend fun getAllKursus(): AllKursusResponse {
-        return kursusService.getAllKursus()
+        kursusApiService.insertKursus(kursus)
     }
 
     override suspend fun updateKursus(idKursus: String, kursus: Kursus) {
-        kursusService.updateKursus(idKursus, kursus)
+        kursusApiService.updateKursus(idKursus, kursus)
     }
 
     override suspend fun deleteKursus(idKursus: String) {
-        val response = kursusService.deleteKursus(idKursus)
-        if (!response.isSuccessful) {
-            throw IOException("Failed to delete kursus. HTTP Status code: ${response.code()}")
+        try {
+            val response = kursusApiService.deleteKursus(idKursus)
+            if (!response.isSuccessful) {
+                throw IOException("Failed to delete kursus. HTTP Status code: ${response.code()}")
+            } else {
+                response.message()
+                println(response.message())
+            }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
-    override suspend fun getKursusById(idKursus: String): KursusDetailResponse {
-        return kursusService.getKursusById(idKursus)
+    override suspend fun getKursus(): List<Kursus> =
+        kursusApiService.getAllKursus()
+
+    override suspend fun getKursusById(idKursus: String): Kursus {
+        return kursusApiService.getKursusById(idKursus)
     }
 }

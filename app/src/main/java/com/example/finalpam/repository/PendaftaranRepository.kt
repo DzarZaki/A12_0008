@@ -7,36 +7,47 @@ import com.example.finalpam.service_api.PendaftaranService
 import java.io.IOException
 
 interface PendaftaranRepository {
+
     suspend fun insertPendaftaran(pendaftaran: Pendaftaran)
-    suspend fun getAllPendaftaran(): AllPendaftaranResponse
+
+    suspend fun getPendaftaran(): List<Pendaftaran>
+
     suspend fun updatePendaftaran(idPendaftaran: String, pendaftaran: Pendaftaran)
+
     suspend fun deletePendaftaran(idPendaftaran: String)
-    suspend fun getPendaftaranById(idPendaftaran: String): PendaftaranDetailResponse
+
+    suspend fun getPendaftaranById(idPendaftaran: String): Pendaftaran
 }
 
 class NetworkPendaftaranRepository(
-    private val pendaftaranService: PendaftaranService
+    private val pendaftaranApiService: PendaftaranService
 ) : PendaftaranRepository {
     override suspend fun insertPendaftaran(pendaftaran: Pendaftaran) {
-        pendaftaranService.insertPendaftaran(pendaftaran)
-    }
-
-    override suspend fun getAllPendaftaran(): AllPendaftaranResponse {
-        return pendaftaranService.getAllPendaftaran()
+        pendaftaranApiService.insertPendaftaran(pendaftaran)
     }
 
     override suspend fun updatePendaftaran(idPendaftaran: String, pendaftaran: Pendaftaran) {
-        pendaftaranService.updatePendaftaran(idPendaftaran, pendaftaran)
+        pendaftaranApiService.updatePendaftaran(idPendaftaran, pendaftaran)
     }
 
     override suspend fun deletePendaftaran(idPendaftaran: String) {
-        val response = pendaftaranService.deletePendaftaran(idPendaftaran)
-        if (!response.isSuccessful) {
-            throw IOException("Failed to delete pendaftaran. HTTP Status code: ${response.code()}")
+        try {
+            val response = pendaftaranApiService.deletePendaftaran(idPendaftaran)
+            if (!response.isSuccessful) {
+                throw IOException("Failed to delete pendaftaran. HTTP Status code: ${response.code()}")
+            } else {
+                response.message()
+                println(response.message())
+            }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
-    override suspend fun getPendaftaranById(idPendaftaran: String): PendaftaranDetailResponse {
-        return pendaftaranService.getPendaftaranById(idPendaftaran)
+    override suspend fun getPendaftaran(): List<Pendaftaran> =
+        pendaftaranApiService.getAllPendaftaran()
+
+    override suspend fun getPendaftaranById(idPendaftaran: String): Pendaftaran {
+        return pendaftaranApiService.getPendaftaranById(idPendaftaran)
     }
 }

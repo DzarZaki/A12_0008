@@ -1,8 +1,6 @@
 package com.example.finalpam.service_api
 
-import com.example.finalpam.model.AllPendaftaranResponse
 import com.example.finalpam.model.Pendaftaran
-import com.example.finalpam.model.PendaftaranDetailResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -10,29 +8,26 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface PendaftaranService {
+
     @Headers(
         "Accept: application/json",
-        "Content-Type: application/json"
+        "Content-Type: application/json",
     )
+    @POST("pendaftaran/tambahpendaftaran.php")
+    suspend fun insertPendaftaran(@Body pendaftaran: Pendaftaran)
 
-    @POST("pendaftaran")
-    suspend fun insertPendaftaran(@Body pendaftaran: Pendaftaran): Response<Void>
+    @GET("pendaftaran/bacapendaftaran.php")
+    suspend fun getAllPendaftaran(): List<Pendaftaran>
 
-    @GET("pendaftaran")
-    suspend fun getAllPendaftaran(): AllPendaftaranResponse
+    @GET("pendaftaran/bacapendaftaran1.php")
+    suspend fun getPendaftaranById(@Query("id_pendaftaran") idPendaftaran: String): Pendaftaran
 
-    @GET("pendaftaran/{id_pendaftaran}")
-    suspend fun getPendaftaranById(@Path("id_pendaftaran") idPendaftaran: String): PendaftaranDetailResponse
+    @PUT("pendaftaran/editpendaftaran.php")
+    suspend fun updatePendaftaran(@Query("id_pendaftaran") idPendaftaran: String, @Body pendaftaran: Pendaftaran)
 
-    @PUT("pendaftaran/{id_pendaftaran}")
-    suspend fun updatePendaftaran(
-        @Path("id_pendaftaran") idPendaftaran: String,
-        @Body pendaftaran: Pendaftaran
-    ): Response<Void>
-
-    @DELETE("pendaftaran/{id_pendaftaran}")
-    suspend fun deletePendaftaran(@Path("id_pendaftaran") idPendaftaran: String): Response<Void>
+    @DELETE("pendaftaran/hapuspendaftaran.php")
+    suspend fun deletePendaftaran(@Query("id_pendaftaran") idPendaftaran: String): Response<Void>
 }

@@ -7,36 +7,47 @@ import com.example.finalpam.service_api.SiswaService
 import java.io.IOException
 
 interface SiswaRepository {
+
     suspend fun insertSiswa(siswa: Siswa)
-    suspend fun getAllSiswa(): AllSiswaResponse
+
+    suspend fun getSiswa(): List<Siswa>
+
     suspend fun updateSiswa(idSiswa: String, siswa: Siswa)
+
     suspend fun deleteSiswa(idSiswa: String)
-    suspend fun getSiswaById(idSiswa: String): SiswaDetailResponse
+
+    suspend fun getSiswaById(idSiswa: String): Siswa
 }
 
 class NetworkSiswaRepository(
-    private val siswaService: SiswaService
+    private val siswaApiService: SiswaService
 ) : SiswaRepository {
     override suspend fun insertSiswa(siswa: Siswa) {
-        siswaService.insertSiswa(siswa)
-    }
-
-    override suspend fun getAllSiswa(): AllSiswaResponse {
-        return siswaService.getAllSiswa()
+        siswaApiService.insertSiswa(siswa)
     }
 
     override suspend fun updateSiswa(idSiswa: String, siswa: Siswa) {
-        siswaService.updateSiswa(idSiswa, siswa)
+        siswaApiService.updateSiswa(idSiswa, siswa)
     }
 
     override suspend fun deleteSiswa(idSiswa: String) {
-        val response = siswaService.deleteSiswa(idSiswa)
-        if (!response.isSuccessful) {
-            throw IOException("Failed to delete siswa. HTTP Status code: ${response.code()}")
+        try {
+            val response = siswaApiService.deleteSiswa(idSiswa)
+            if (!response.isSuccessful) {
+                throw IOException("Failed to delete siswa. HTTP Status code: ${response.code()}")
+            } else {
+                response.message()
+                println(response.message())
+            }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
-    override suspend fun getSiswaById(idSiswa: String): SiswaDetailResponse {
-        return siswaService.getSiswaById(idSiswa)
+    override suspend fun getSiswa(): List<Siswa> =
+        siswaApiService.getAllSiswa()
+
+    override suspend fun getSiswaById(idSiswa: String): Siswa {
+        return siswaApiService.getSiswaById(idSiswa)
     }
 }

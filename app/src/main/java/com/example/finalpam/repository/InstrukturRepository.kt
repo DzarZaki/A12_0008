@@ -1,42 +1,52 @@
 package com.example.finalpam.repository
 
-import com.example.finalpam.model.AllInstrukturResponse
+import InstrukturService
 import com.example.finalpam.model.Instruktur
-import com.example.finalpam.model.InstrukturDetailResponse
-import com.example.finalpam.service_api.InstrukturService
+
 import java.io.IOException
 
 interface InstrukturRepository {
+
     suspend fun insertInstruktur(instruktur: Instruktur)
-    suspend fun getAllInstruktur(): AllInstrukturResponse
+
+    suspend fun getInstruktur(): List<Instruktur>
+
     suspend fun updateInstruktur(idInstruktur: String, instruktur: Instruktur)
+
     suspend fun deleteInstruktur(idInstruktur: String)
-    suspend fun getInstrukturById(idInstruktur: String): InstrukturDetailResponse
+
+    suspend fun getInstrukturById(idInstruktur: String): Instruktur
 }
 
 class NetworkInstrukturRepository(
-    private val instrukturService: InstrukturService
+    private val instrukturApiService: InstrukturService
 ) : InstrukturRepository {
     override suspend fun insertInstruktur(instruktur: Instruktur) {
-        instrukturService.insertInstruktur(instruktur)
-    }
-
-    override suspend fun getAllInstruktur(): AllInstrukturResponse {
-        return instrukturService.getAllInstruktur()
+        instrukturApiService.insertInstruktur(instruktur)
     }
 
     override suspend fun updateInstruktur(idInstruktur: String, instruktur: Instruktur) {
-        instrukturService.updateInstruktur(idInstruktur, instruktur)
+        instrukturApiService.updateInstruktur(idInstruktur, instruktur)
     }
 
     override suspend fun deleteInstruktur(idInstruktur: String) {
-        val response = instrukturService.deleteInstruktur(idInstruktur)
-        if (!response.isSuccessful) {
-            throw IOException("Failed to delete instruktur. HTTP Status code: ${response.code()}")
+        try {
+            val response = instrukturApiService.deleteInstruktur(idInstruktur)
+            if (!response.isSuccessful) {
+                throw IOException("Failed to delete instruktur. HTTP Status code: ${response.code()}")
+            } else {
+                response.message()
+                println(response.message())
+            }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
-    override suspend fun getInstrukturById(idInstruktur: String): InstrukturDetailResponse {
-        return instrukturService.getInstrukturById(idInstruktur)
+    override suspend fun getInstruktur(): List<Instruktur> =
+        instrukturApiService.getAllInstruktur()
+
+    override suspend fun getInstrukturById(idInstruktur: String): Instruktur {
+        return instrukturApiService.getInstrukturById(idInstruktur)
     }
 }

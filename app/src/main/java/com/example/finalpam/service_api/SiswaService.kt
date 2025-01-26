@@ -11,28 +11,26 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface SiswaService {
+
     @Headers(
         "Accept: application/json",
-        "Content-Type: application/json"
+        "Content-Type: application/json",
     )
+    @POST("siswa/tambahsiswa.php")
+    suspend fun insertSiswa(@Body siswa: Siswa)
 
-    @POST("siswa")
-    suspend fun insertSiswa(@Body siswa: Siswa): Response<Void>
+    @GET("siswa/bacasiswa.php")
+    suspend fun getAllSiswa(): List<Siswa>
 
-    @GET("siswa")
-    suspend fun getAllSiswa(): AllSiswaResponse
+    @GET("siswa/bacasiswa1.php")
+    suspend fun getSiswaById(@Query("id_siswa") idSiswa: String): Siswa
 
-    @GET("siswa/{id_siswa}")
-    suspend fun getSiswaById(@Path("id_siswa") idSiswa: String): SiswaDetailResponse
+    @PUT("siswa/editsiswa.php")
+    suspend fun updateSiswa(@Query("id_siswa") idSiswa: String, @Body siswa: Siswa)
 
-    @PUT("siswa/{id_siswa}")
-    suspend fun updateSiswa(
-        @Path("id_siswa") idSiswa: String,
-        @Body siswa: Siswa
-    ): Response<Void>
-
-    @DELETE("siswa/{id_siswa}")
-    suspend fun deleteSiswa(@Path("id_siswa") idSiswa: String): Response<Void>
+    @DELETE("siswa/hapussiswa.php")
+    suspend fun deleteSiswa(@Query("id_siswa") idSiswa: String): Response<Void>
 }
