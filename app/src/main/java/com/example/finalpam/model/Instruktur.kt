@@ -3,19 +3,6 @@ package com.example.finalpam.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
-data class AllInstrukturResponse(
-    val status: Boolean,
-    val message: String,
-    val data: List<Instruktur>
-)
-
-@Serializable
-data class InstrukturDetailResponse(
-    val status: Boolean,
-    val message: String,
-    val data: Instruktur
-)
 
 @Serializable
 data class Instruktur(
