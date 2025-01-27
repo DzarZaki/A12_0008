@@ -46,7 +46,7 @@ fun InsertPendaftaranUiEvent.toPendaftaran(): Pendaftaran = Pendaftaran(
     idSiswa = idSiswa,
     idKursus = idKursus,
     tanggalpendaftaran = tanggalPendaftaran,
-    status = status
+
 )
 
 // Konversi Pendaftaran ke InsertPendaftaranUiState
@@ -60,5 +60,5 @@ fun Pendaftaran.toInsertPendaftaranUiEvent(): InsertPendaftaranUiEvent = InsertP
     idSiswa = idSiswa,
     idKursus = idKursus,
     tanggalPendaftaran = tanggalpendaftaran,
-    status = status
+
 )

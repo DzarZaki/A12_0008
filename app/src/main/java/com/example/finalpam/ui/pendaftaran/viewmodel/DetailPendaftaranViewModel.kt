@@ -81,5 +81,5 @@ fun Pendaftaran.toDetailUiEvent(): InsertPendaftaranUiEvent = InsertPendaftaranU
     idSiswa = idSiswa,
     idKursus = idKursus,
     tanggalPendaftaran = tanggalpendaftaran,
-    status = status
+
 )

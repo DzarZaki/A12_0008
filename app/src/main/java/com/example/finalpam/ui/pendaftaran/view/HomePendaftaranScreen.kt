@@ -190,10 +190,6 @@ fun PendaftaranCard(
                 text = "Tanggal: ${pendaftaran.tanggalpendaftaran}",
                 style = MaterialTheme.typography.bodySmall
             )
-            Text(
-                text = "Status: ${pendaftaran.status}",
-                style = MaterialTheme.typography.bodySmall
-            )
         }
     }
 }

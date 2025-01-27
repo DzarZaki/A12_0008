@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Pendaftaran(
+    @SerialName("id_pendaftaran")
     val idPendaftaran: String,
     @SerialName("id_siswa")
     val idSiswa: String,
@@ -14,5 +15,4 @@ data class Pendaftaran(
     val idKursus: String,
     @SerialName("tanggal_pendaftaran")
     val tanggalpendaftaran: String,
-    val status: String
 )

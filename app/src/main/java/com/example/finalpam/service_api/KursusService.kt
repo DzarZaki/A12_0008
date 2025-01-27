@@ -17,7 +17,7 @@ interface KursusService {
         "Content-Type: application/json",
     )
     @POST("kursus/tambahkursus.php")
-    suspend fun insertKursus(@Body kursus: Kursus): Response<Void>
+    suspend fun insertKursus(@Body kursus: Kursus)
 
     @GET("kursus/bacakursus.php")
     suspend fun getAllKursus(): List<Kursus>
