@@ -15,26 +15,29 @@ class UpdateKursusViewModel (
     private val kursusRepository: KursusRepository
 ) : ViewModel() {
 
-    var updateUIState by mutableStateOf(InsertKursusUiState())
+    var updateUiState by mutableStateOf(InsertKursusUiState())
         private set
 
-    private val _idKursus: String = checkNotNull(savedStateHandle[DestinasiUpdate.ID_KURSUS])
+    private val idKursus: String = checkNotNull(savedStateHandle[DestinasiUpdate.ID_KURSUS])
 
     init {
         viewModelScope.launch {
-            updateUIState = kursusRepository.getKursusById(_idKursus)
+            updateUiState = kursusRepository.getKursusById(idKursus)
                 .toUiStateKursus()
         }
     }
 
     fun updateInsertKursusState(insertUiEvent: InsertKursusUiEvent) {
-        updateUIState = InsertKursusUiState(insertUiEvent = insertUiEvent)
+        updateUiState = InsertKursusUiState(insertUiEvent = insertUiEvent)
     }
 
-    fun updateData() {
+    fun updateKursus() {
         viewModelScope.launch {
             try {
-                kursusRepository.updateKursus(_idKursus, updateUIState.insertUiEvent.toKursus())
+                kursusRepository.updateKursus(
+                    idKursus,
+                    updateUiState.insertUiEvent.toKursus()
+                )
             } catch (e: Exception) {
                 e.printStackTrace()
             }

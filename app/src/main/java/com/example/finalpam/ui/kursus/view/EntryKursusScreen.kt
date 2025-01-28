@@ -138,6 +138,14 @@ fun FormInput(
             enabled = enabled,
             singleLine = true
         )
+        OutlinedTextField(
+            value = insertUiEvent.idInstruktur,
+            onValueChange = { onValueChange(insertUiEvent.copy(idInstruktur = it)) },
+            label = { Text(text = "ID Instruktur") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
         if (enabled) {
             Text(
                 text = "Isi Semua Data!",

@@ -32,7 +32,7 @@ class DetailInstrukturViewModel(
             try {
                 val result = instrukturRepository.getInstrukturById(idInstruktur)
                 detailUiState = DetailInstrukturUiState(
-                    detailUiEvent = result.toDetailUiEvent(),
+                    detailUiEvent = result.toDetailInstrukturUiEvent(),
                     isLoading = false
                 )
             } catch (e: Exception) {
@@ -75,7 +75,7 @@ data class DetailInstrukturUiState(
         get() = detailUiEvent != InsertInstrukturUiEvent()
 }
 
-fun Instruktur.toDetailUiEvent(): InsertInstrukturUiEvent = InsertInstrukturUiEvent(
+fun Instruktur.toDetailInstrukturUiEvent(): InsertInstrukturUiEvent = InsertInstrukturUiEvent(
     idInstruktur = idInstruktur,
     nama = nama,
     email = email,

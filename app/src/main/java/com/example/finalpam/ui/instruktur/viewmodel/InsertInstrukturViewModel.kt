@@ -40,7 +40,6 @@ data class InsertInstrukturUiEvent(
     val deskripsi: String = ""
 )
 
-// Konversi InsertInstrukturUiEvent ke Instruktur
 fun InsertInstrukturUiEvent.toInstruktur(): Instruktur = Instruktur(
     idInstruktur = idInstruktur,
     nama = nama,
@@ -49,12 +48,10 @@ fun InsertInstrukturUiEvent.toInstruktur(): Instruktur = Instruktur(
     deskripsi = deskripsi
 )
 
-// Konversi Instruktur ke InsertInstrukturUiState
 fun Instruktur.toUiStateInstruktur(): InsertInstrukturUiState = InsertInstrukturUiState(
     insertUiEvent = toInsertInstrukturUiEvent()
 )
 
-// Konversi Instruktur ke InsertInstrukturUiEvent
 fun Instruktur.toInsertInstrukturUiEvent(): InsertInstrukturUiEvent = InsertInstrukturUiEvent(
     idInstruktur = idInstruktur,
     nama = nama,

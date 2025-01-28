@@ -2,11 +2,14 @@ package com.example.finalpam.ui.pendaftaran.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.finalpam.PenyediaViewModel
 import com.example.finalpam.ui.costumwidget.CustomTopAppBar
+import com.example.finalpam.ui.kursus.view.OnError
+import com.example.finalpam.ui.kursus.view.OnLoading
 import com.example.finalpam.ui.navigation.DestinasiNavigasi
 import com.example.finalpam.ui.pendaftaran.viewmodel.DetailPendaftaranUiState
 import com.example.finalpam.ui.pendaftaran.viewmodel.DetailPendaftaranViewModel
@@ -38,11 +43,12 @@ object DestinasiDetailPendaftaran : DestinasiNavigasi {
 @Composable
 fun DetailPendaftaranScreen(
     navigateBack: () -> Unit,
+    onEditClick: (String) -> Unit,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onEditClick: () -> Unit,
-    onDeleteClick: () -> Unit = { },
     viewModel: DetailPendaftaranViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
+    val uiState = viewModel.detailUiState
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -57,90 +63,79 @@ fun DetailPendaftaranScreen(
         }
     ) { innerPadding ->
         DetailPendaftaranBody(
-            detailUiState = viewModel.detailUiState,
+            uiState = uiState,
+            onEditClick = onEditClick,
             onDeleteClick = {
                 viewModel.deletePendaftaran()
-                navigateBack()
+                onDeleteClick()
             },
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .fillMaxWidth()
         )
     }
 }
 
 @Composable
 fun DetailPendaftaranBody(
-    detailUiState: DetailPendaftaranUiState,
+    uiState: DetailPendaftaranUiState,
+    onEditClick: (String) -> Unit,
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(18.dp),
-        modifier = modifier.padding(12.dp)
-    ) {
-        if (detailUiState.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-        } else if (detailUiState.isError) {
-            Text(
-                text = "Terjadi kesalahan: ${detailUiState.errorMessage}",
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-        } else {
-            FormDetailPendaftaran(
-                detailUiEvent = detailUiState.detailUiEvent,
-                modifier = Modifier.fillMaxWidth()
-            )
-            Button(
-                onClick = onDeleteClick,
-                shape = MaterialTheme.shapes.small,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "Hapus Pendaftaran")
-            }
-        }
+    when {
+        uiState.isLoading -> OnLoading(modifier = modifier.fillMaxSize())
+        uiState.isError -> OnError(retryAction = {}, modifier = modifier.fillMaxSize())
+        else -> DetailPendaftaranContent(
+            detailUiEvent = uiState.detailUiEvent,
+            onEditClick = onEditClick,
+            onDeleteClick = onDeleteClick,
+            modifier = modifier
+        )
     }
 }
 
 @Composable
-fun FormDetailPendaftaran(
+fun DetailPendaftaranContent(
     detailUiEvent: InsertPendaftaranUiEvent,
+    onEditClick: (String) -> Unit,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier.padding(16.dp)
     ) {
-        OutlinedTextField(
-            value = detailUiEvent.idSiswa,
-            onValueChange = {},
-            label = { Text(text = "ID Siswa") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = false
+        Text(
+            text = "ID Siswa: ${detailUiEvent.idSiswa}",
+            style = MaterialTheme.typography.titleLarge
         )
-        OutlinedTextField(
-            value = detailUiEvent.idKursus,
-            onValueChange = {},
-            label = { Text(text = "ID Kursus") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = false
+        Text(
+            text = "ID Kursus: ${detailUiEvent.idKursus}",
+            style = MaterialTheme.typography.bodyLarge
         )
-        OutlinedTextField(
-            value = detailUiEvent.tanggalPendaftaran,
-            onValueChange = {},
-            label = { Text(text = "Tanggal") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = false
+        Text(
+            text = "Tanggal Pendaftaran: ${detailUiEvent.tanggalPendaftaran}",
+            style = MaterialTheme.typography.bodyLarge
         )
-        OutlinedTextField(
-            value = detailUiEvent.status,
-            onValueChange = {},
-            label = { Text(text = "Status") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = false
-        )
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Button(
+                onClick = { onEditClick(detailUiEvent.idPendaftaran) },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Edit")
+            }
+            Button(
+                onClick = onDeleteClick,
+                modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+            ) {
+                Text(text = "Hapus")
+            }
+        }
     }
 }

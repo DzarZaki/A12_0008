@@ -21,13 +21,13 @@ fun CustomTopAppBar(
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     navigateUp: () -> Unit = {},
-    showRefresh: Boolean = false, // Parameter baru untuk kontrol ikon refresh
+    showRefresh: Boolean = false,
     onRefresh: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
         title = { Text(title) },
         actions = {
-            if (showRefresh) { // Tampilkan ikon refresh hanya jika diperlukan
+            if (showRefresh) {
                 Icon(
                     imageVector = Icons.Default.Refresh,
                     contentDescription = "Refresh Data",

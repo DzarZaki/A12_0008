@@ -11,13 +11,14 @@ import com.example.finalpam.repository.KursusRepository
 import com.example.finalpam.ui.kursus.view.DestinasiDetail
 import kotlinx.coroutines.launch
 
-class DetailKursusViewModel (
+class DetailKursusViewModel(
     savedStateHandle: SavedStateHandle,
     private val kursusRepository: KursusRepository
 ) : ViewModel() {
+
     private val idKursus: String = checkNotNull(savedStateHandle[DestinasiDetail.ID_KURSUS])
 
-    var detailUiState: DetailKursusUiState by mutableStateOf(DetailKursusUiState())
+    var detailUiState by mutableStateOf(DetailKursusUiState())
         private set
 
     init {
@@ -30,7 +31,7 @@ class DetailKursusViewModel (
             try {
                 val result = kursusRepository.getKursusById(idKursus)
                 detailUiState = DetailKursusUiState(
-                    detailUiEvent = result.toDetailUiEvent(),
+                    detailUiEvent = result.toDetailKursusUiEvent(),
                     isLoading = false
                 )
             } catch (e: Exception) {
@@ -65,15 +66,9 @@ data class DetailKursusUiState(
     val isLoading: Boolean = false,
     val isError: Boolean = false,
     val errorMessage: String = ""
-) {
-    val isUiEventEmpty: Boolean
-        get() = detailUiEvent == InsertKursusUiEvent()
+)
 
-    val isUiEventNotEmpty: Boolean
-        get() = detailUiEvent != InsertKursusUiEvent()
-}
-
-fun Kursus.toDetailUiEvent(): InsertKursusUiEvent {
+fun Kursus.toDetailKursusUiEvent(): InsertKursusUiEvent {
     return InsertKursusUiEvent(
         idKursus = idKursus,
         namaKursus = namaKursus,

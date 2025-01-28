@@ -32,7 +32,7 @@ class DetailPendaftaranViewModel(
             try {
                 val result = pendaftaranRepository.getPendaftaranById(idPendaftaran)
                 detailUiState = DetailPendaftaranUiState(
-                    detailUiEvent = result.toDetailUiEvent(),
+                    detailUiEvent = result.toDetailPendaftaranUiEvent(),
                     isLoading = false
                 )
             } catch (e: Exception) {
@@ -75,11 +75,9 @@ data class DetailPendaftaranUiState(
         get() = detailUiEvent != InsertPendaftaranUiEvent()
 }
 
-// Konversi Pendaftaran ke Detail UI Event
-fun Pendaftaran.toDetailUiEvent(): InsertPendaftaranUiEvent = InsertPendaftaranUiEvent(
+fun Pendaftaran.toDetailPendaftaranUiEvent(): InsertPendaftaranUiEvent = InsertPendaftaranUiEvent(
     idPendaftaran = idPendaftaran,
     idSiswa = idSiswa,
     idKursus = idKursus,
-    tanggalPendaftaran = tanggalpendaftaran,
-
+    tanggalPendaftaran = tanggalpendaftaran
 )

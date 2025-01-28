@@ -60,7 +60,7 @@ fun UpdateSiswaScreen(
             onSaveClick = {
                 coroutineScope.launch {
                     viewModel.updateSiswa()
-                    delay(600) // Memberikan waktu untuk menyelesaikan operasi
+                    delay(600)
                     withContext(Dispatchers.Main) {
                         onNavigate()
                     }

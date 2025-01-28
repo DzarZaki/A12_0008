@@ -87,6 +87,6 @@ object PenyediaViewModel {
     }
 }
 
-// Ekstensi untuk mendapatkan aplikasi
+
 fun CreationExtras.aplikasiFinal(): FinalApplications =
     (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as FinalApplications)

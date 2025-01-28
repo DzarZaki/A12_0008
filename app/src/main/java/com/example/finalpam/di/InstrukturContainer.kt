@@ -14,7 +14,7 @@ interface InstrukturAppContainer {
 
 class InstrukturContainer : InstrukturAppContainer {
 
-    private val baseUrl = "http://10.0.2.2:80/umyTI/" // localhost diganti IP jika run di HP
+    private val baseUrl = "http://10.0.2.2:80/umyTI/"
     private val json = Json { ignoreUnknownKeys = true }
     private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))

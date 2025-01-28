@@ -40,7 +40,7 @@ data class InsertPendaftaranUiEvent(
     val status: String = ""
 )
 
-// Konversi InsertPendaftaranUiEvent ke Pendaftaran
+
 fun InsertPendaftaranUiEvent.toPendaftaran(): Pendaftaran = Pendaftaran(
     idPendaftaran = idPendaftaran,
     idSiswa = idSiswa,
@@ -49,12 +49,10 @@ fun InsertPendaftaranUiEvent.toPendaftaran(): Pendaftaran = Pendaftaran(
 
 )
 
-// Konversi Pendaftaran ke InsertPendaftaranUiState
 fun Pendaftaran.toUiStatePendaftaran(): InsertPendaftaranUiState = InsertPendaftaranUiState(
     insertUiEvent = toInsertPendaftaranUiEvent()
 )
 
-// Konversi Pendaftaran ke InsertPendaftaranUiEvent
 fun Pendaftaran.toInsertPendaftaranUiEvent(): InsertPendaftaranUiEvent = InsertPendaftaranUiEvent(
     idPendaftaran = idPendaftaran,
     idSiswa = idSiswa,

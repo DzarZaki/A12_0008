@@ -37,28 +37,31 @@ data class InsertKursusUiEvent(
     val namaKursus: String = "",
     val deskripsi: String = "",
     val kategori: String = "",
-    val harga: Double = 0.0
+    val harga: Double = 0.0,
+    val idInstruktur: String = ""
 )
 
-// Konversi InsertKursusUiEvent ke Kursus
+
 fun InsertKursusUiEvent.toKursus(): Kursus = Kursus(
     idKursus = idKursus,
     namaKursus = namaKursus,
     deskripsi = deskripsi,
     kategori = kategori,
-    harga = harga
+    harga = harga,
+    idInstruktur = idInstruktur
 )
 
-// Konversi Kursus ke InsertKursusUiState
+
 fun Kursus.toUiStateKursus(): InsertKursusUiState = InsertKursusUiState(
     insertUiEvent = toInsertKursusUiEvent()
 )
 
-// Konversi Kursus ke InsertKursusUiEvent
+
 fun Kursus.toInsertKursusUiEvent(): InsertKursusUiEvent = InsertKursusUiEvent(
     idKursus = idKursus,
     namaKursus = namaKursus,
     deskripsi = deskripsi,
     kategori = kategori,
-    harga = harga
+    harga = harga,
+    idInstruktur = idInstruktur
 )

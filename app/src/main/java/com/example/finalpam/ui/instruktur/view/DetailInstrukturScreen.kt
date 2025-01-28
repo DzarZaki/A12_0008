@@ -2,11 +2,14 @@ package com.example.finalpam.ui.instruktur.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +28,8 @@ import com.example.finalpam.ui.costumwidget.CustomTopAppBar
 import com.example.finalpam.ui.instruktur.viewmodel.DetailInstrukturUiState
 import com.example.finalpam.ui.instruktur.viewmodel.DetailInstrukturViewModel
 import com.example.finalpam.ui.instruktur.viewmodel.InsertInstrukturUiEvent
+import com.example.finalpam.ui.kursus.view.OnError
+import com.example.finalpam.ui.kursus.view.OnLoading
 import com.example.finalpam.ui.navigation.DestinasiNavigasi
 
 object DestinasiDetailInstruktur : DestinasiNavigasi {
@@ -38,11 +43,12 @@ object DestinasiDetailInstruktur : DestinasiNavigasi {
 @Composable
 fun DetailInstrukturScreen(
     navigateBack: () -> Unit,
+    onEditClick: (String) -> Unit,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onEditClick: () -> Unit,
-    onDeleteClick: () -> Unit = { },
     viewModel: DetailInstrukturViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
+    val uiState = viewModel.detailUiState
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -57,90 +63,87 @@ fun DetailInstrukturScreen(
         }
     ) { innerPadding ->
         DetailInstrukturBody(
-            detailUiState = viewModel.detailUiState,
+            uiState = uiState,
+            onEditClick = onEditClick,
             onDeleteClick = {
                 viewModel.deleteInstruktur()
-                navigateBack()
+                onDeleteClick()
             },
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .fillMaxWidth()
         )
     }
 }
 
 @Composable
 fun DetailInstrukturBody(
-    detailUiState: DetailInstrukturUiState,
+    uiState: DetailInstrukturUiState,
+    onEditClick: (String) -> Unit,
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(18.dp),
-        modifier = modifier.padding(12.dp)
-    ) {
-        if (detailUiState.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-        } else if (detailUiState.isError) {
-            Text(
-                text = "Terjadi kesalahan: ${detailUiState.errorMessage}",
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-        } else {
-            FormDetailInstruktur(
-                detailUiEvent = detailUiState.detailUiEvent,
-                modifier = Modifier.fillMaxWidth()
-            )
-            Button(
-                onClick = onDeleteClick,
-                shape = MaterialTheme.shapes.small,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "Hapus Instruktur")
-            }
-        }
+    when {
+        uiState.isLoading -> OnLoading(modifier = modifier.fillMaxSize())
+        uiState.isError -> OnError(retryAction = {}, modifier = modifier.fillMaxSize())
+        else -> DetailInstrukturContent(
+            detailUiEvent = uiState.detailUiEvent,
+            onEditClick = onEditClick,
+            onDeleteClick = onDeleteClick,
+            modifier = modifier
+        )
     }
 }
 
 @Composable
-fun FormDetailInstruktur(
+fun DetailInstrukturContent(
     detailUiEvent: InsertInstrukturUiEvent,
+    onEditClick: (String) -> Unit,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier.padding(16.dp)
     ) {
-        OutlinedTextField(
-            value = detailUiEvent.nama,
-            onValueChange = {},
-            label = { Text(text = "Nama") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = false
+        Text(
+            text = "Nama: ${detailUiEvent.nama}",
+            style = MaterialTheme.typography.titleLarge
         )
-        OutlinedTextField(
-            value = detailUiEvent.email,
-            onValueChange = {},
-            label = { Text(text = "Email") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = false
+        Text(
+            text = "ID Instruktur: ${detailUiEvent.idInstruktur}",
+            style = MaterialTheme.typography.bodyLarge
         )
-        OutlinedTextField(
-            value = detailUiEvent.nomorTelepon,
-            onValueChange = {},
-            label = { Text(text = "Nomor Telepon") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = false
+        Text(
+            text = "Email: ${detailUiEvent.email}",
+            style = MaterialTheme.typography.bodyLarge
         )
-        OutlinedTextField(
-            value = detailUiEvent.deskripsi,
-            onValueChange = {},
-            label = { Text(text = "Deskripsi") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = false
+        Text(
+            text = "Nomor Telepon: ${detailUiEvent.nomorTelepon}",
+            style = MaterialTheme.typography.bodyLarge
         )
+        Text(
+            text = "Deskripsi: ${detailUiEvent.deskripsi}",
+            style = MaterialTheme.typography.bodyLarge
+        )
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Button(
+                onClick = { onEditClick(detailUiEvent.idInstruktur) },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Edit")
+            }
+            Button(
+                onClick = onDeleteClick,
+                modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+            ) {
+                Text(text = "Hapus")
+            }
+        }
     }
 }
